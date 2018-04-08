@@ -56,6 +56,8 @@ class Game {
   constructor() {
     console.log(`Welcome to the game. Version ${this.version()}`);
 
+    this.loadSound();
+
     this.canvas = document.getElementById("game-canvas");
     this.stage = new createjs.Stage(this.canvas);
 
@@ -83,6 +85,13 @@ class Game {
   version() {
     return '1.0.0';
   }
+
+  loadSound() {
+    createjs.Sound.alternateExtensions = ["ogg", "wav"];
+    createjs.Sound.registerSound("soundfx/jump7.aiff", "Jump");
+    createjs.Sound.registerSound("soundfx/game-over.aiff", "Game Over");
+  }
+
 
   restartGame() {
     this.gameData.resetData();
@@ -112,16 +121,21 @@ class Game {
 
   handleClick(numberedBox) {
     if (this.gameData.isRightNumber(numberedBox.number)) {
+      createjs.Sound.play("Jump");
       this.stage.removeChild(numberedBox);
       this.gameData.nextNumber();
 
       // is game over?
       if (this.gameData.isGameWin()) {
+        createjs.Sound.play("Game Over");
+
         var gameOverView = new lib.GameOverView();
         this.stage.addChild(gameOverView);
 
 
         gameOverView.restartButton.on('click', (function () {
+          createjs.Sound.play("Jump");
+
           this.restartGame();
         }).bind(this));
 
