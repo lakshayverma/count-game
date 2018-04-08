@@ -9,6 +9,13 @@ class NumberedBox extends createjs.Container {
 
     let movieClip = new lib.NumberedBox();
     movieClip.numberText.text = number;
+    movieClip.numberText.font = "28px Oswald";
+
+    movieClip.numberText.textBaseline = "alphabet";
+
+    movieClip.numberText.x += 2;
+    movieClip.numberText.y = 36;
+
 
     this.addChild(movieClip);
 
