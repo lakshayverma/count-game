@@ -26,7 +26,6 @@ class Game {
 
     window.debugStage = this.stage;
 
-    createjs.Ticker.setFPS(60);
 
     // Keep re-drawing the stage.
     createjs.Ticker.on("tick", this.stage);
