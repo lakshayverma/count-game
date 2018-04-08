@@ -1,8 +1,10 @@
 // logic for the Count game
 
 class NumberedBox extends createjs.Container {
-  constructor (number = 0) {
+  constructor (game, number = 0) {
     super();
+
+    this.game = game;
 
     let movieClip = new lib.NumberedBox();
     movieClip.numberText.text = number;
@@ -11,6 +13,11 @@ class NumberedBox extends createjs.Container {
 
     this.setBounds(0, 0, 50, 50);
 
+    this.on('click', this.handleClick.bind(this));
+  }
+
+  handleClick() {
+    this.game.handleClick(this);
   }
 }
 
@@ -20,6 +27,8 @@ class Game {
 
     this.canvas = document.getElementById("game-canvas");
     this.stage = new createjs.Stage(this.canvas);
+
+    createjs.Touch.enable(this.stage);
 
     this.stage.width = this.canvas.width;
     this.stage.height = this.canvas.height;
@@ -34,7 +43,6 @@ class Game {
     this.stage.addChild(new lib.Background());
 
     // code
-    // this.stage.addChild(new NumberedBox(88));
     this.generateMultipleBoxes();
   }
 
@@ -44,13 +52,17 @@ class Game {
 
   generateMultipleBoxes (amount=10) {
     for (let i = amount; i > 0; i--) {
-      let movieClip = new NumberedBox(i);
+      let movieClip = new NumberedBox(this, i);
       this.stage.addChild(movieClip);
 
       // random position
       movieClip.x = Math.random() * (this.stage.width - movieClip.getBounds().width);
       movieClip.y = Math.random() * (this.stage.height - movieClip.getBounds().height);
     }
+  }
+
+  handleClick(numberedBox) {
+    this.stage.removeChild(numberedBox);
   }
 }
 
