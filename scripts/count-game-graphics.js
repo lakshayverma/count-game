@@ -199,9 +199,9 @@
     this.initialize(mode, startPosition, loop, {});
 
     // Layer 1
-    this.instance = new lib.RestartButton();
-    this.instance.setTransform(196.5, 283.1, 1, 1, 0, 0, 0, 121.5, 51);
-    new cjs.ButtonHelper(this.instance, 0, 1, 2, false, new lib.RestartButton(), 3);
+    this.restartButton = new lib.RestartButton();
+    this.restartButton.setTransform(196.5, 283.1, 1, 1, 0, 0, 0, 121.5, 51);
+    new cjs.ButtonHelper(this.restartButton, 0, 1, 2, false, new lib.RestartButton(), 3);
 
     this.shape = new cjs.Shape();
     this.shape.graphics.f("#E6EFF8").s().p("AgcBrIAAg1IA6AAIAAA1gAgTAnIgLhgIAAgxIA+AAIAAAxIgNBgg");
@@ -253,7 +253,7 @@
       }, {
         t: this.shape
       }, {
-        t: this.instance
+        t: this.restartButton
       }]
     }).wait(1));
 

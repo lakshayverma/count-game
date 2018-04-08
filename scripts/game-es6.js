@@ -55,6 +55,8 @@ class Game {
     // enable taps on touch devices
     createjs.Touch.enable(this.stage);
 
+    this.stage.enableMouseOver();
+
     this.stage.width = this.canvas.width;
     this.stage.height = this.canvas.height;
 
