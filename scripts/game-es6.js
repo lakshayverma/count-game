@@ -41,8 +41,7 @@ class GameData {
   }
 
   isGameWin() {
-    // TODO: Implement the logic to determine if Player has WON.
-    return false;
+    return (this.currentNumber > this.amountOfBox);
   }
 }
 
@@ -73,7 +72,7 @@ class Game {
     this.stage.addChild(new lib.Background());
 
     // code
-    this.generateMultipleBoxes();
+    this.generateMultipleBoxes(this.gameData.amountOfBox);
 
     // enable retina display
     this.retinalize();
@@ -98,6 +97,12 @@ class Game {
     if (this.gameData.isRightNumber(numberedBox.number)) {
       this.stage.removeChild(numberedBox);
       this.gameData.nextNumber();
+
+      // is game over?
+      if (this.gameData.isGameWin()) {
+        var gameOverView = new lib.GameOverView();
+        this.stage.addChild(gameOverView);
+      }
     }
   }
 
