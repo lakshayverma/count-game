@@ -5,6 +5,7 @@ class NumberedBox extends createjs.Container {
     super();
 
     this.game = game;
+    this.number = number;
 
     let movieClip = new lib.NumberedBox();
     movieClip.numberText.text = number;
@@ -18,6 +19,30 @@ class NumberedBox extends createjs.Container {
 
   handleClick() {
     this.game.handleClick(this);
+  }
+}
+
+class GameData {
+  constructor() {
+    this.amountOfBox = 20;
+    this.resetData();
+  }
+
+  resetData() {
+    this.currentNumber = 1;
+  }
+
+  nextNumber() {
+    this.currentNumber += 1;
+  }
+
+  isRightNumber(number) {
+    return (number === this.currentNumber);
+  }
+
+  isGameWin() {
+    // TODO: Implement the logic to determine if Player has WON.
+    return false;
   }
 }
 
@@ -36,9 +61,13 @@ class Game {
 
     window.debugStage = this.stage;
 
+    // set the framerate
     createjs.Ticker.framerate = 60;
+
     // Keep re-drawing the stage.
     createjs.Ticker.on("tick", this.stage);
+
+    this.gameData = new GameData();
 
     // background
     this.stage.addChild(new lib.Background());
@@ -66,7 +95,10 @@ class Game {
   }
 
   handleClick(numberedBox) {
-    this.stage.removeChild(numberedBox);
+    if (this.gameData.isRightNumber(numberedBox.number)) {
+      this.stage.removeChild(numberedBox);
+      this.gameData.nextNumber();
+    }
   }
 
   retinalize() {
