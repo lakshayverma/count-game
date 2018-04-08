@@ -1,7 +1,7 @@
 // logic for the Count game
 
 class NumberedBox extends createjs.Container {
-  constructor (game, number = 0) {
+  constructor(game, number = 0) {
     super();
 
     this.game = game;
@@ -70,8 +70,20 @@ class Game {
 
     this.gameData = new GameData();
 
+    this.restartGame();
+  }
+
+  version() {
+    return '1.0.0';
+  }
+
+  restartGame() {
+    this.gameData.resetData();
+    this.stage.removeAllChildren();
+
     // background
     this.stage.addChild(new lib.Background());
+
 
     // code
     this.generateMultipleBoxes(this.gameData.amountOfBox);
@@ -80,11 +92,7 @@ class Game {
     this.retinalize();
   }
 
-  version() {
-    return '1.0.0';
-  }
-
-  generateMultipleBoxes (amount=10) {
+  generateMultipleBoxes(amount = 10) {
     for (let i = amount; i > 0; i--) {
       let movieClip = new NumberedBox(this, i);
       this.stage.addChild(movieClip);
@@ -104,6 +112,12 @@ class Game {
       if (this.gameData.isGameWin()) {
         var gameOverView = new lib.GameOverView();
         this.stage.addChild(gameOverView);
+
+
+        gameOverView.restartButton.on('click', (function () {
+          this.restartGame();
+        }).bind(this));
+
       }
     }
   }
